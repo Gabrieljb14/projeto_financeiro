@@ -4,7 +4,7 @@ from app.conta import Conta
 
 class TestConta:
 
-        def test_cria_conta(self) -> None:
+    def test_cria_conta(self) -> None:
         c = Conta("Alexandre O Grande", 960.9)
         assert c.nome == "Alexandre O Grande"
         assert c.saldo == 960.9
