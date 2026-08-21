@@ -4,6 +4,10 @@ class Conta:
         self.nome = nome
         self.saldo = saldo
 
+    def _validar_nome(self, nome: str) -> None:
+        if not nome or not nome.strip():
+            raise ValueError("O nome da conta é obrigatório")
+
     def _validar_valor_positivo(self, valor: float) -> None:
         if valor <= 0.0:
             raise ValueError("Valor de transação indisponível!")

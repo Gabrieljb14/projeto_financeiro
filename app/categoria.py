@@ -6,25 +6,34 @@ class Tipo(Enum):
 
 class Categoria():
 
-    contador_generio = 0
+    contador_generico = 0
 
-    def __init__(self, nome: str, tipo: Tipo) ->None:
-        self.nomes = set()
-        self.tipo = tipo   
+    nomes_existentes = set()
 
-    def evita_nomes_duplicados(self, nome)-> None:
+    def __init__(self, nome_entrada: str, tipo: Tipo) ->None:
+        self.tipo = tipo 
+        self.nome = self.valida_e_formata_nome(nome_entrada)
 
-        if not nome:
-            while  f"Item {self.contador_generio}" in self.nomes:
-                self.contador_generio += 1
-            nome = f"Item {self.contador_generio}"
+    def valida_e_formata_nome(self, nome: str) -> str:
+        if not nome or not nome.strip():
+            nome = f"Item {Categoria.contador_generico}"
+            while nome in Categoria.nomes_existentes:
+                Categoria.contador_generico += 1
+                nome = f"Item {Categoria.contador_generico}"
+            Categoria.contador_generico += 1      
+
 
         nome_formatado = nome.strip().capitalize()
-         
-        if nome_formatado in self.nomes:
-            raise ValueError(f"O nome {nome_formatado} já existe")
-        self.nomes.add(nome_formatado)
 
-               
+        if nome_formatado in Categoria.nomes_existentes:
+            raise ValueError (f"O nome {nome_formatado} já existe!")
+
+        Categoria.nomes_existentes.add(nome_formatado)
+        return nome_formatado
+
+    @classmethod
+    def limpar_estado(cls) -> None:
+        cls.nomes_existentes.clear()
+        cls.contador_generico = 1
 
 
