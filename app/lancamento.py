@@ -7,7 +7,7 @@ class Lancamento:
     contador_generico = 1
 
 
-    def __init__(self, descricao_entrada: str, valor: float, categoria: Categoria, data: date) -> None:
+    def __init__(self, descricao_entrada: str, valor: float, categoria: Categoria) -> None:
         if not isinstance (categoria, Categoria):
             raise ValueError("Categoria não especificada")
         self.categoria = categoria
@@ -19,8 +19,6 @@ class Lancamento:
     @staticmethod
     def validar_valor(valor: float) -> None:
         validar_valores_positivos(valor)
-        if valor == 0.0:
-            raise ValueError("Registro sem movimentação real")
     
     def valida_e_formata_descricao(self, descricao: str) -> str:
         if not descricao or not descricao.strip():

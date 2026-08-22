@@ -13,7 +13,7 @@ class TestLancamento:
 
     def test_criar_lancamento(self) -> None:
         categoria_salario = Categoria("Salário", Tipo.RECEITA)
-        l = Lancamento("Uber", 20.8, categoria_salario, date.today())
+        l = Lancamento("Uber", 20.8, categoria_salario)
         assert l.descricao == "Uber"
         assert l.valor == 20.8
         assert l.categoria == categoria_salario
@@ -23,9 +23,9 @@ class TestLancamento:
 
     def test_criar_lancamento_vazio(self) -> None:
             categoria_salario = Categoria("Salário", Tipo.RECEITA)
-            l = Lancamento("", 20.8, categoria_salario, date.today())
-            m = Lancamento("", 20.8, categoria_salario, date.today())
-            n = Lancamento("", 20.8, categoria_salario, date.today())
+            l = Lancamento("", 20.8, categoria_salario)
+            m = Lancamento("", 20.8, categoria_salario)
+            n = Lancamento("", 20.8, categoria_salario)
             assert l.descricao == "Lançamento 1"
             assert m.descricao == "Lançamento 2"
             assert n.descricao == "Lançamento 3"
@@ -34,11 +34,11 @@ class TestLancamento:
             assert l.data == date.today()
 
     def test_lancar_valor_vazio(self) -> None:
-                categoria_salario = Categoria("Salário", Tipo.DESPESA)
-                with pytest.raises(ValueError, match="Valor de transação indisponível!"):
-                    Lancamento("Uber", -10.0, categoria_salario, date.today())
+        categoria_salario = Categoria("Salário", Tipo.RECEITA)
+        with pytest.raises(ValueError, match="Registro sem movimentação real!"):
+            Lancamento("Uber", 0.0, categoria_salario)
 
     def test_lancar_categoria_vazia(self) -> None:
           categoria_salario = None
           with pytest.raises(ValueError, match="Categoria não especificada"):
-                Lancamento("Ifood", 35.9, categoria_salario, date.today())
+                Lancamento("Ifood", 35.9, categoria_salario)
