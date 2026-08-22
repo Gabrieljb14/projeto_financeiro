@@ -1,3 +1,5 @@
+from app.validadores import validar_valores_positivos
+
 class Conta:
 
     def __init__(self, nome: str, saldo: float) -> None:
@@ -8,16 +10,12 @@ class Conta:
         if not nome or not nome.strip():
             raise ValueError("O nome da conta é obrigatório")
 
-    def _validar_valor_positivo(self, valor: float) -> None:
-        if valor <= 0.0:
-            raise ValueError("Valor de transação indisponível!")
-
     def adicionar_dinheiro(self, valor: float) -> None:
-        self._validar_valor_positivo(valor)
+        validar_valores_positivos(valor)
         self.saldo += valor
 
     def remover_dinheiro(self, valor: float) -> None:
-        self._validar_valor_positivo(valor)
+        validar_valores_positivos(valor)
         if valor > self.saldo:
             raise ValueError("Saldo insuficiente para realizar o saque.")
         self.saldo -= valor
