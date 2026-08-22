@@ -26,6 +26,19 @@ class TestCategoria:
          with pytest.raises(ValueError):
               Categoria("Salário", Tipo.DESPESA)
 
-    def test_criar_categoria_sem_nome(self) -> None:
-         c = Categoria(" ", Tipo.DESPESA)
-         assert c.nome == "Item 1"
+    def test_criar_categoria_sem_nome_em_sequencia(self) -> None:
+        c = Categoria("", Tipo.RECEITA)
+        d = Categoria("", Tipo.DESPESA)
+        e = Categoria("", Tipo.DESPESA)
+        f = Categoria("", Tipo.RECEITA)
+        g = Categoria("", Tipo.RECEITA)
+        assert c.nome == "Item 1"
+        assert d.nome == "Item 2"
+        assert e.nome == "Item 3"
+        assert f.nome == "Item 4"
+        assert g.nome == "Item 5"
+
+    def test_valida_tipo_de_categoria(self) -> None:
+        c = Categoria("Salário", None)
+        with pytest.raises(ValueError):
+             c.valida_tipo_de_categoria(None)

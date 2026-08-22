@@ -6,7 +6,7 @@ class Tipo(Enum):
 
 class Categoria():
 
-    contador_generico = 0
+    contador_generico = 1
 
     nomes_existentes = set()
 
@@ -19,8 +19,7 @@ class Categoria():
             nome = f"Item {Categoria.contador_generico}"
             while nome in Categoria.nomes_existentes:
                 Categoria.contador_generico += 1
-                nome = f"Item {Categoria.contador_generico}"
-            Categoria.contador_generico += 1      
+                nome = f"Item {Categoria.contador_generico}"     
 
 
         nome_formatado = nome.strip().capitalize()
@@ -30,6 +29,10 @@ class Categoria():
 
         Categoria.nomes_existentes.add(nome_formatado)
         return nome_formatado
+
+    def valida_tipo_de_categoria (self, tipo: Tipo) -> None:
+        if not Tipo(None):
+            raise ValueError("O tipo da categoria deve ser selecionado")
 
     @classmethod
     def limpar_estado(cls) -> None:
