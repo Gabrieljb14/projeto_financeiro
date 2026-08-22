@@ -7,7 +7,7 @@ class TestCategoria:
 
     @pytest.fixture(autouse=True)
     def redefinir_estado(self) -> None:
-        Categoria.limpar_estado() #Limpa a categoria para cada teste
+        Categoria.limpar_estado()
 
     def test_criar_categoria_receita(self) -> None:
         c = Categoria("Salário", Tipo.RECEITA)
