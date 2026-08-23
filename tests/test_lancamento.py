@@ -13,9 +13,9 @@ class TestLancamento:
 
     def test_criar_lancamento(self) -> None:
         categoria_salario = Categoria("Salário", Tipo.RECEITA)
-        l = Lancamento("Uber", 20.8, categoria_salario)
-        assert l.descricao == "Uber"
-        assert l.valor == 20.8
+        l = Lancamento("Pagamento", 960.9, categoria_salario)
+        assert l.descricao == "Pagamento"
+        assert l.valor == 960.9
         assert l.categoria == categoria_salario
         assert l.data == date.today()
 
