@@ -31,20 +31,20 @@ class TestFechamento:
 #Teste de erro
 
     def test_ignora_lancamento_fora_do_periodo(self) -> None:
-            categoria_receita = Categoria("Salário", Tipo.RECEITA)
-            categoria_despesa = Categoria("Aluguel", Tipo.DESPESA)
+        categoria_receita = Categoria("Salário", Tipo.RECEITA)
+        categoria_despesa = Categoria("Aluguel", Tipo.DESPESA)
             
-            with freeze_time("2026, 01, 05"):
-                l1 = Lancamento("Salário", 960.9, categoria_receita)
-                with freeze_time("2026, 01, 10"):
-                        l2 = Lancamento("Aluguel", 400.0, categoria_despesa)
+        with freeze_time("2026, 01, 05"):
+            l1 = Lancamento("Salário", 960.9, categoria_receita)
+        with freeze_time("2026, 01, 10"):
+            l2 = Lancamento("Aluguel", 400.0, categoria_despesa)
             
-                f = Fechamento([l1, l2], date(2026, 1, 6), date(2026, 1, 31))
+            f = Fechamento([l1, l2], date(2026, 1, 6), date(2026, 1, 31))
     
-                assert len(f.obter_lancamentos_do_periodo()) == 1
-                assert f.total_despesas == 400.0
-                assert f.total_receitas == 0.0
-                assert f.saldo == -400.0
+            assert len(f.obter_lancamentos_do_periodo()) == 1
+            assert f.total_despesas == 400.0
+            assert f.total_receitas == 0.0
+            assert f.saldo == -400.0
 
     def lista_vazia_gera_saldo_zerado(self) -> None:
         f = Fechamento([], date(2026,1,1), date(2026,1,31))
