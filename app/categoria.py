@@ -10,7 +10,7 @@ class Categoria():
 
     nomes_existentes = set()
 
-    def __init__(self, nome_entrada: str, tipo: Tipo) ->None:
+    def __init__(self, nome_entrada: str, tipo: Tipo) -> None:
         self.tipo = tipo 
         self.nome = self.valida_e_formata_nome(nome_entrada)
 
