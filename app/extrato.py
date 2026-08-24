@@ -17,4 +17,11 @@ class Extrato:
     def validar_intervalo_de_datas(data_inicio: date, data_fim: date) -> None:
         validar_datas(data_inicio, data_fim)
 
-    def obter_fechamento_do_periodo(self, fechamentos   )
+    def obter_fechamentos_do_periodo(self, fechamentos: list[Fechamento]) -> list[Fechamento]:
+        return [f for f in fechamentos if f.data_inicio >= self.data_inicio and f.data_fim <= self.data_fim]
+
+    def calcular_total_receitas(self, fechamentos_periodo: list[Fechamento]) -> float:
+        return sum(f.total_receitas for f in fechamentos_periodo)
+
+    def calcular_total_despesas(self, fechamentos_periodo: list[Fechamento]) -> float:
+        return sum(f.total_despesas for f in fechamentos_periodo)
