@@ -11,7 +11,7 @@ class Categoria():
     nomes_existentes = set()
 
     def __init__(self, nome_entrada: str, tipo: Tipo) -> None:
-        self.tipo = tipo 
+        self.tipo = self.valida_tipo_de_categoria(tipo)
         self.nome = self.valida_e_formata_nome(nome_entrada)
 
     def valida_e_formata_nome(self, nome: str) -> str:
@@ -30,9 +30,11 @@ class Categoria():
         Categoria.nomes_existentes.add(nome_formatado)
         return nome_formatado
 
-    def valida_tipo_de_categoria (self, tipo: Tipo) -> None:
-        if not Tipo(None):
-            raise ValueError("O tipo da categoria deve ser selecionado")
+    def valida_tipo_de_categoria (self, tipo: Tipo) -> Tipo:
+        if tipo is None or not isinstance(tipo, Tipo):
+            raise ValueError("O tipo de categoria fornecido é inválido.")
+    
+        return tipo
 
     @classmethod
     def limpar_estado(cls) -> None:

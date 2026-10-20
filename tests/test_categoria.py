@@ -39,6 +39,6 @@ class TestCategoria:
         assert g.nome == "Item 5"
 
     def test_valida_tipo_de_categoria(self) -> None:
-        c = Categoria("Salário", None)
-        with pytest.raises(ValueError):
-             c.valida_tipo_de_categoria(None)
+        import pytest
+        with pytest.raises(ValueError): 
+            c = Categoria("Salário", None)
