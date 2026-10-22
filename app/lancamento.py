@@ -1,13 +1,14 @@
 from datetime import date
 from app.categoria import Categoria
 from app.validadores import validar_valores_positivos
+from decimal import Decimal
 
 class Lancamento:
 
     contador_generico = 1
 
 
-    def __init__(self, descricao_entrada: str, valor: float, categoria: Categoria) -> None:
+    def __init__(self, descricao_entrada: str, valor: Decimal, categoria: Categoria) -> None:
         if not isinstance (categoria, Categoria):
             raise ValueError("Categoria não especificada")
         self.categoria = categoria
@@ -17,7 +18,7 @@ class Lancamento:
         self.data = date.today()
 
     @staticmethod
-    def validar_valor(valor: float) -> None:
+    def validar_valor(valor: Decimal) -> None:
         validar_valores_positivos(valor)
     
     def valida_e_formata_descricao(self, descricao: str) -> str:

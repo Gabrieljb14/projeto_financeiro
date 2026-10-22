@@ -1,4 +1,6 @@
-def validar_valores_positivos(valor: float) -> None:
+from decimal import Decimal
+
+def validar_valores_positivos(valor: Decimal) -> None:
     if valor <= 0.0:
         raise ValueError("Registro sem movimentação real!")
     pass

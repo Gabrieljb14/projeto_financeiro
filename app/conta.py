@@ -1,8 +1,10 @@
+from decimal import Decimal
+
 from app.validadores import validar_valores_positivos
 
 class Conta:
 
-    def __init__(self, nome: str, saldo: float) -> None:
+    def __init__(self, nome: str, saldo: Decimal) -> None:
         self.nome = nome
         self.saldo = saldo
 
@@ -10,11 +12,11 @@ class Conta:
         if not nome or not nome.strip():
             raise ValueError("O nome da conta é obrigatório")
 
-    def adicionar_dinheiro(self, valor: float) -> None:
+    def adicionar_dinheiro(self, valor: Decimal) -> None:
         validar_valores_positivos(valor)
         self.saldo += valor
 
-    def remover_dinheiro(self, valor: float) -> None:
+    def remover_dinheiro(self, valor: Decimal) -> None:
         validar_valores_positivos(valor)
         if valor > self.saldo:
             raise ValueError("Saldo insuficiente para realizar o saque.")
@@ -23,4 +25,3 @@ class Conta:
     def visualizar_saldo(self) -> float:
         return self.saldo
 
-#Fazer validação de nome vazio

@@ -4,6 +4,7 @@ from app.categoria import Categoria, Tipo
 from app.fechamento import Fechamento
 from app.lancamento import Lancamento
 from freezegun import freeze_time
+from decimal import Decimal
 
 class TestFechamento:
 
@@ -18,15 +19,15 @@ class TestFechamento:
         categoria_despesa = Categoria("Aluguel", Tipo.DESPESA)
 
         with freeze_time("2026, 01, 05"):
-            l1 = Lancamento("Salário", 960.9, categoria_receita)
+            l1 = Lancamento("Salário", Decimal('960.9'), categoria_receita)
         with freeze_time("2026, 01, 10"):
-            l2 = Lancamento("Aluguel", 400.0, categoria_despesa)
+            l2 = Lancamento("Aluguel", Decimal('400.0'), categoria_despesa)
 
         f = Fechamento([l1, l2], date(2026, 1, 1), date(2026, 1, 31))
 
-        assert f.total_receitas == 960.9
-        assert f.total_despesas == 400.0
-        assert f.saldo == 560.9
+        assert f.total_receitas == Decimal('960.9')
+        assert f.total_despesas == Decimal('400.0')
+        assert f.saldo == Decimal('560.9')
 
 #Teste de erro
 
@@ -35,23 +36,23 @@ class TestFechamento:
         categoria_despesa = Categoria("Aluguel", Tipo.DESPESA)
             
         with freeze_time("2026-01-05"):
-            l1 = Lancamento("Salário", 960.9, categoria_receita)
+            l1 = Lancamento("Salário", Decimal(960.9), categoria_receita)
         with freeze_time("2026-01-10"):
-            l2 = Lancamento("Aluguel", 400.0, categoria_despesa)
+            l2 = Lancamento("Aluguel", Decimal(400.0), categoria_despesa)
             
             f = Fechamento([l1, l2], date(2026, 1, 6), date(2026, 1, 31))
     
             assert len(f.obter_lancamentos_do_periodo()) == 1
-            assert f.total_despesas == 400.0
-            assert f.total_receitas == 0.0
-            assert f.saldo == -400.0
+            assert f.total_despesas == Decimal(400.0)
+            assert f.total_receitas == Decimal(0.0)
+            assert f.saldo == Decimal(-400.0)
 
     def test_lista_vazia_gera_saldo_zerado(self) -> None:
         f = Fechamento([], date(2026,1,1), date(2026,1,31))
 
-        assert f.total_despesas == 0.0
-        assert f.total_receitas == 0.0
-        assert f.saldo == 0.0
+        assert f.total_despesas == Decimal(0.0)
+        assert f.total_receitas == Decimal(0.0)
+        assert f.saldo == Decimal(0.0)
 
     def test_data_fim_anterior_a_data_comeco(self) -> None:
          with pytest.raises(ValueError):

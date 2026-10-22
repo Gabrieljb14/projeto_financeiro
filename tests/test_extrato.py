@@ -5,6 +5,7 @@ from app.categoria import Categoria, Tipo
 from app.lancamento import Lancamento
 from app.fechamento import Fechamento
 from app.extrato import Extrato
+from decimal import Decimal
 
 class TestExtrato:
 
@@ -19,44 +20,44 @@ class TestExtrato:
         categoria_despesa = Categoria("", Tipo.DESPESA)
 
         with freeze_time("2026-01-01"):
-            l1 = Lancamento("Salário", 960.9, categoria_receita)
+            l1 = Lancamento("Salário", Decimal('960.9'), categoria_receita)
         with freeze_time("2026-01-10"):
-            l2 = Lancamento("Aluguel", 400.0, categoria_despesa)
+            l2 = Lancamento("Aluguel", Decimal('400.0'), categoria_despesa)
 
         with freeze_time("2026-06-01"):
-            l3 = Lancamento("Salário", 960.9, categoria_receita)
+            l3 = Lancamento("Salário", Decimal('960.9'), categoria_receita)
         with freeze_time("2026-06-10"):
-            l4 = Lancamento("Aluguel", 400.0, categoria_despesa)
+            l4 = Lancamento("Aluguel", Decimal('400.0'), categoria_despesa)
                     
             f1 = Fechamento([l1, l2], date(2026, 1, 1), date(2026, 1, 31))
             f2 = Fechamento([l3, l4], date(2026, 6, 1), date(2026, 6, 30))
 
             e = Extrato([f1, f2], data_inicio=date(2026, 1, 1), data_fim=date(2026, 6, 30))
 
-            assert e.total_despesas == 800.0
-            assert e.total_receitas == 1921.8
-            assert e.saldo == 1121.8
+            assert e.total_despesas == Decimal('800.0')
+            assert e.total_receitas == Decimal('1921.8')
+            assert e.saldo == Decimal('1121.8')
 
     def test_ignora_fechamento_fora_do_periodo(self) -> None:
         categoria_receita = Categoria("", Tipo.RECEITA)
         categoria_despesa = Categoria("", Tipo.DESPESA)
         
         with freeze_time("2026-01-01"):
-            l1 = Lancamento("Salário", 960.9, categoria_receita)
+            l1 = Lancamento("Salário", Decimal('960.9'), categoria_receita)
         with freeze_time("2026-01-10"):
-            l2 = Lancamento("Aluguel", 400.0, categoria_despesa)
+            l2 = Lancamento("Aluguel", Decimal('400.0'), categoria_despesa)
         
         with freeze_time("2026-06-01"):
-            l3 = Lancamento("Salário", 960.9, categoria_receita)
+            l3 = Lancamento("Salário", Decimal('960.9'), categoria_receita)
         with freeze_time("2026-06-10"):
-            l4 = Lancamento("Aluguel", 400.0, categoria_despesa)
+            l4 = Lancamento("Aluguel", Decimal('400.0'), categoria_despesa)
                             
             f1 = Fechamento([l1, l2], date(2025, 12, 1), date(2025, 12, 31))   
             f2 = Fechamento([l3, l4], date(2026, 6, 1), date(2026, 6, 30))
 
         e = Extrato([f1, f2], data_inicio=date(2026, 1, 1), data_fim=date(2026, 6, 30))
 
-        assert e.saldo == 560.9
+        assert e.saldo == Decimal('560.9')
 
     def test_lista_vazia_gera_totais_zerados(self) -> None:
         e = Extrato([], date(2026, 1, 1), date(2026, 6, 30))
